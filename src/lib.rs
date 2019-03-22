@@ -7,7 +7,7 @@ use proc_macro::{Diagnostic, TokenStream};
 use proc_macro2::Span;
 
 use syn::{
-    parse::{self, ParseStream, Parser},
+    parse::{self, Parser},
     parse_macro_input, parse_quote,
     punctuated::Punctuated,
     spanned::Spanned,
@@ -16,7 +16,7 @@ use syn::{
     Token,
 };
 
-use quote::{quote, ToTokens};
+use quote::ToTokens;
 
 /// `debug_try` is a function attribute macro that will replace any occurence of the `?` try operator
 /// with code that prints to standard error whenever an error is propagated.
@@ -56,6 +56,24 @@ use quote::{quote, ToTokens};
 /// * The macro will only transform `?` try operators that occur in certain known macros:
 ///   `println`, `eprintln`, `format`, `write` and `writeln`.
 ///
+/// # Example
+///
+/// ```
+/// use std::{error, fs, io, path};
+/// use debug_try::debug_try;
+/// # fn main() { my_func(); }
+///
+/// #[debug_try(nested = true)]
+/// fn my_func() -> Result<(), Box<dyn error::Error>> {
+///     fn file_size<P: AsRef<path::Path>>(file: P) -> Result<usize, io::Error> {
+///         let data = fs::read(file)?;
+///         Ok(data.len())
+///     }
+///
+///     println!("file size = {}", file_size("non_existing_file.txt")?);
+///     Ok(())
+/// }
+/// ```
 #[proc_macro_attribute]
 pub fn debug_try(args: TokenStream, input: TokenStream) -> TokenStream {
     // parse arguments
