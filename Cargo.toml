@@ -2,12 +2,17 @@
 name = "debug-try"
 version = "0.1.0"
 authors = ["Fredrik Østrem <frx.apps@gmail.com>"]
+description = "Macro to print messages when errors are propagated."
+categories = ["development-tools::debugging"]
+readme = "README.md"
 edition = "2018"
+license = "MIT"
+repository = "https://github.com/frxstrem/debug-try"
 
 [lib]
 proc-macro = true
 
 [dependencies]
-syn = { version = "0.15", features = [ "full", "visit-mut", "extra-traits" ] }
+syn = { version = "0.15", features = [ "full", "visit-mut" ] }
 quote = "0.6"
 proc-macro2 = "0.4"

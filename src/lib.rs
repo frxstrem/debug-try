@@ -12,7 +12,7 @@ use syn::{
     punctuated::Punctuated,
     spanned::Spanned,
     visit_mut::{self, VisitMut},
-    AttributeArgs, Expr, ExprClosure, ExprTry, Item, ItemFn, Lit, Macro, Meta, NestedMeta, Stmt,
+    AttributeArgs, Expr, ExprClosure, ExprTry, ItemFn, Lit, Macro, Meta, NestedMeta, Stmt,
     Token,
 };
 
@@ -39,14 +39,12 @@ use quote::ToTokens;
 /// The macro can be used with or without arguments:
 /// ```ignore
 /// #[debug_try]
-/// #[debug_try(nested = false, release = false)]
+/// #[debug_try(nested = false)]
 /// ```
 ///
 /// The following arguments are supported:
 /// * `nested`: If true, the macro will transform closures and inner functions as well. By default,
 ///   this is false.
-/// * `debug_only`: If true, the macro will only apply transformations for debug builds. By default,
-///   this is true.
 ///
 /// # Limitations
 ///
